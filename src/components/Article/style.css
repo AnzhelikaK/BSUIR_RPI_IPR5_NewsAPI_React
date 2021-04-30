@@ -1,0 +1,9 @@
+.article {
+    padding: 20px;
+    margin: 50px;
+    border: 1px solid black;
+    border-radius: 5px;
+    box-shadow: crimson 4px 4px 9px;
+    background-color: orange;
+    opacity: 85%;
+}
