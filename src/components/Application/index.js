@@ -6,7 +6,7 @@ const apiKey = 'f43f70cf39ef42929b58013df7a02a4c';
 const articlesLimit = 40;
 const pageSize = 5;
 
-const getArticles = async ({ itemsPerPage, page }) => {
+const getArticles = async ({itemsPerPage, page}) => {
     const url = `https://newsapi.org/v2/top-headlines?country=ru&apiKey=${apiKey}&pageSize=${itemsPerPage}&page=${page}`;
     let response = await fetch(url);
     if (!response.ok) {
@@ -31,6 +31,22 @@ export const Application = () => {
     const showLoadMoreButton = useRef(false);
     const currentPage = useRef(1);
     const itemsPerPage = useRef(pageSize);
+
+    const handleLoadMoreBtn = () => {
+        currentPage.current++;
+        getArticles({
+            itemsPerPage: itemsPerPage.current,
+            page: currentPage.current,
+        })
+            .then(({items, total}) => {
+                setArticles((prev) => {
+                    const articles = [...prev, ...items];
+                    showLoadMoreButton.current = articles.length < articlesLimit && articles.length < total;
+                    return articles;
+                });
+            })
+            .catch((e) => alert(e.message));
+    }
 
     useEffect(() => {
         currentPage.current = 1;
@@ -58,6 +74,7 @@ export const Application = () => {
                 })}
             </div> : " "}
             <Article/>
+            {showLoadMoreButton.current && <button className={'button'} onClick={handleLoadMoreBtn}>Load more</button>}
         </div>
     );
 }
