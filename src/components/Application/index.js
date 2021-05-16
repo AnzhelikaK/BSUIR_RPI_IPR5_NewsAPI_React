@@ -4,7 +4,7 @@ import {Article} from "../Article";
 
 const apiKey = 'f43f70cf39ef42929b58013df7a02a4c';
 const articlesLimit = 40;
-const pageSize = 5;
+const pageSize = 10;
 
 const getArticles = async ({itemsPerPage, page}) => {
     const url = `https://newsapi.org/v2/top-headlines?country=ru&apiKey=${apiKey}&pageSize=${itemsPerPage}&page=${page}`;
